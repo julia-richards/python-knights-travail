@@ -36,6 +36,22 @@ class Node:
             self._children.remove(node)
             node.parent = None
 
+    def depth_search(self, value):
+        # visited = set()
+        # if node not in visited:
+        #     visited.add(node)
+        if self._value == value:
+            return self
+        for child in self._children:
+            node = child.depth_search(value)
+            if node is not None:
+                return node
+        return None
+
+
+
+
+
 
 node1 = Node("root1")
 node2 = Node("root2")
