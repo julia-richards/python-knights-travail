@@ -51,19 +51,23 @@ class KnightPathFinder:
                 possible_position = Node(move)
                 current_node.add_child(possible_position)
                 moves_from_position.append(possible_position)
-        
 
-    #   def breadth_search(self, value):
-    #     queue = list(self)
-    #     while queue:
-    #         node = queue.pop(0)
-    #         if node._value == value:
-    #             return node
-    #         queue.extend(node._children)
-    #     return None
+    def find_path(self, end_position):
+        end_value = self._root.depth_search(end_position)
+        view = [node.value for node in self.trace_to_root(end_value)]
+        return view
+
+    def trace_to_root(self, end_node):
+        nodes = []
+        current_node = end_node
+        while current_node:
+            nodes.insert(0, current_node)
+            current_node = current_node.parent
+        return nodes
+
 
 finder = KnightPathFinder((0, 0))
 finder.build_move_tree()
-print(finder._root.children)
-
-
+print(finder.find_path((2, 1))) # => [(0, 0), (2, 1)]
+print(finder.find_path((6, 2))) # => [(0, 0), (1, 2), (2, 4), (4, 3), (6, 2)]
+print(finder.find_path((7, 6))) # => [(0, 0), (1, 2), (2, 4), (4, 3), (5, 5), (7, 6)]
